@@ -12,7 +12,7 @@ export type Step = {
   highlightedNode?: string;
 };
 
-export const step1: Step = {
+export const step7: Step = {
   startX: 30,
   startY: 70,
   nodes: [
