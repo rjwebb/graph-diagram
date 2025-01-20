@@ -2,25 +2,73 @@ import "./App.css";
 
 function App() {
   const nodeRadius = 20;
-  const linePadding = 5 + nodeRadius;
+  const linePadding = 8 + nodeRadius;
+  const nodeXGap = 160;
+  const nodeYGap = 100;
+  const startX = 30;
+  const startY = 60;
   const nodes = [
     {
-      x: 60,
-      y: 150,
+      x: startX,
+      y: startY,
       label: "A",
       branch: 0,
       clock: 0,
     },
     {
-      x: 200,
-      y: 150,
+      x: startX + nodeXGap,
+      y: startY,
       label: "B",
+      clock: 1,
+      branch: 0,
+    },
+    {
+      x: startX + nodeXGap * 2,
+      y: startY,
+      label: "C",
+      clock: 2,
+      branch: 0,
+    },
+    {
+      x: startX + nodeXGap * 1,
+      y: startY + nodeYGap,
+      label: "D",
+      clock: 1,
+      branch: 1,
+    },
+    {
+      x: startX + nodeXGap * 2,
+      y: startY + nodeYGap,
+      label: "E",
+      clock: 2,
+      branch: 1,
+    },
+    {
+      x: startX + nodeXGap * 3,
+      y: startY + nodeYGap,
+      label: "F",
+      clock: 3,
+      branch: 1,
+    },
+    {
+      x: startX + nodeXGap * 3,
+      y: startY + nodeYGap * 2,
+      label: "G",
+      clock: 3,
+      branch: 2,
     },
   ];
 
   const edges: { from: string; to: string }[] = [
     // edges
     { from: "A", to: "B" },
+    { from: "B", to: "C" },
+    { from: "A", to: "D" },
+    { from: "D", to: "E" },
+    { from: "B", to: "E" },
+    { from: "E", to: "F" },
+    { from: "C", to: "G" },
+    { from: "E", to: "G" },
   ];
 
   const nodesByLabel = Object.fromEntries(
@@ -90,49 +138,28 @@ function App() {
           const dx = toNode.x - fromNode.x;
           const dy = toNode.y - fromNode.y;
 
-          let x1, y1, x2, y2;
-          // special cases
+          let lineDx, lineDy;
           if (dx === 0) {
-            // vertical line
-            x1 = fromNode.x;
-            x2 = toNode.x;
-
-            if (fromNode.y > toNode.y) {
-              y1 = fromNode.y - linePadding;
-              y2 = toNode.y + linePadding;
-            } else {
-              y1 = fromNode.y + linePadding;
-              y2 = toNode.y - linePadding;
-            }
+            lineDx = 0;
+            lineDy = linePadding;
           } else if (dy === 0) {
-            // horizontal line
-            y1 = fromNode.y;
-            y2 = toNode.y;
-            if (fromNode.x > toNode.x) {
-              x1 = fromNode.x - linePadding;
-              x2 = toNode.x + linePadding;
-            } else {
-              x1 = fromNode.x + linePadding;
-              x2 = toNode.x - linePadding;
-            }
+            lineDy = 0;
+            lineDx = linePadding;
           } else {
-            // diagonal line
-            const gradient = dy / dx;
-            x1 = fromNode.x + nodeRadius * (1 / gradient);
-            y1 = fromNode.y + nodeRadius * gradient;
-            x2 = toNode.x - nodeRadius * (1 / gradient);
-            y2 = toNode.y - nodeRadius * gradient;
+            const angle = Math.atan2(dy, dx);
+            lineDx = Math.cos(angle) * linePadding;
+            lineDy = Math.sin(angle) * linePadding;
           }
 
           // return a line
           return (
             <line
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
+              x1={fromNode.x + lineDx}
+              y1={fromNode.y + lineDy}
+              x2={toNode.x - lineDx}
+              y2={toNode.y - lineDy}
               stroke="black"
-              strokeWidth="4"
+              strokeWidth="3"
             />
           );
         })}
