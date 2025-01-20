@@ -6,7 +6,10 @@ function App() {
   const nodeXGap = 160;
   const nodeYGap = 100;
   const startX = 30;
-  const startY = 60;
+  const startY = 70;
+  const tagOffsetX = -20;
+  const tagOffsetY = 30;
+  const tagSpacingY = 20;
   const nodes = [
     {
       x: startX,
@@ -110,8 +113,8 @@ function App() {
 
             <text
               key={`branch-${i}`}
-              x={node.x + 20}
-              y={node.y - 20}
+              x={node.x + tagOffsetX}
+              y={node.y - tagOffsetY}
               fontFamily="Arial, sans-serif"
               fontSize="14"
               fill="black"
@@ -120,8 +123,8 @@ function App() {
             </text>
             <text
               key={`clock-${i}`}
-              x={node.x + 20}
-              y={node.y - 40}
+              x={node.x + tagOffsetX}
+              y={node.y - tagOffsetY - tagSpacingY}
               fontFamily="Arial, sans-serif"
               fontSize="14"
               fill="black"
