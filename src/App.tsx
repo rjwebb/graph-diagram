@@ -78,16 +78,29 @@ function App() {
     nodes.map((node) => [node.label, node])
   );
 
+  const highlightedNode = "G";
+
   return (
     <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="600px"
-        height="300px"
+        width="565px"
+        height="310px"
         style={{ border: "solid black 1px" }}
       >
         {nodes.map((node, i) => (
           <>
+            {node.label === highlightedNode && (
+              <rect
+                key={`highlight-${i}`}
+                x={node.x - 35}
+                y={node.y - 70}
+                fill="lightgreen"
+                width="80px"
+                height="100px"
+                rx="20px"
+              />
+            )}
             <circle
               key={`circle-${i}`}
               cx={node.x}
