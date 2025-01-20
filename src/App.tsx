@@ -1,68 +1,61 @@
 import "./App.css";
 
-function App() {
-  const nodeRadius = 20;
-  const linePadding = 8 + nodeRadius;
-  const nodeXGap = 160;
-  const nodeYGap = 100;
-  const startX = 30;
-  const startY = 70;
-  const tagOffsetX = -20;
-  const tagOffsetY = 30;
-  const tagSpacingY = 20;
-  const nodes = [
+const step1 = {
+  startX: 30,
+  startY: 70,
+  nodes: [
     {
-      x: startX,
-      y: startY,
+      x: 0,
+      y: 0,
       label: "A",
       branch: 0,
       clock: 0,
     },
     {
-      x: startX + nodeXGap,
-      y: startY,
+      x: 1,
+      y: 0,
       label: "B",
       clock: 1,
       branch: 0,
     },
     {
-      x: startX + nodeXGap * 2,
-      y: startY,
+      x: 2,
+      y: 0,
       label: "C",
       clock: 2,
       branch: 0,
     },
     {
-      x: startX + nodeXGap * 1,
-      y: startY + nodeYGap,
+      x: 1,
+      y: 1,
       label: "D",
       clock: 1,
       branch: 1,
     },
     {
-      x: startX + nodeXGap * 2,
-      y: startY + nodeYGap,
+      x: 2,
+      y: 1,
       label: "E",
       clock: 2,
       branch: 1,
     },
     {
-      x: startX + nodeXGap * 3,
-      y: startY + nodeYGap,
+      x: 3,
+      y: 1,
       label: "F",
       clock: 3,
       branch: 1,
     },
     {
-      x: startX + nodeXGap * 3,
-      y: startY + nodeYGap * 2,
+      x: 3,
+      y: 2,
       label: "G",
       clock: 3,
       branch: 2,
     },
-  ];
+  ],
 
-  const edges: { from: string; to: string }[] = [
+  edges: [
     // edges
     { from: "A", to: "B" },
     { from: "B", to: "C" },
@@ -72,13 +65,24 @@ function App() {
     { from: "E", to: "F" },
     { from: "C", to: "G" },
     { from: "E", to: "G" },
-  ];
+  ],
+  highlightedNode: "G",
+};
+
+function App() {
+  const nodeRadius = 20;
+  const linePadding = 8 + nodeRadius;
+  const nodeXGap = 160;
+  const nodeYGap = 100;
+  const tagOffsetX = -20;
+  const tagOffsetY = 30;
+  const tagSpacingY = 20;
+
+  const { nodes, highlightedNode, edges, startX, startY } = step1;
 
   const nodesByLabel = Object.fromEntries(
     nodes.map((node) => [node.label, node])
   );
-
-  const highlightedNode = "G";
 
   return (
     <>
@@ -88,71 +92,81 @@ function App() {
         height="310px"
         style={{ border: "solid black 1px" }}
       >
-        {nodes.map((node, i) => (
-          <>
-            {node.label === highlightedNode && (
-              <rect
-                key={`highlight-${i}`}
-                x={node.x - 35}
-                y={node.y - 70}
-                fill="lightgreen"
-                width="80px"
-                height="100px"
-                rx="20px"
+        {nodes.map((node, i) => {
+          const x = startX + node.x * nodeXGap;
+          const y = startY + node.y * nodeYGap;
+          return (
+            <>
+              {node.label === highlightedNode && (
+                <rect
+                  key={`highlight-${i}`}
+                  x={x - 35}
+                  y={y - 70}
+                  fill="lightgreen"
+                  width="80px"
+                  height="100px"
+                  rx="20px"
+                />
+              )}
+              <circle
+                key={`circle-${i}`}
+                cx={x}
+                cy={y}
+                r={nodeRadius}
+                fill="white"
+                stroke="black"
+                strokeWidth="3"
               />
-            )}
-            <circle
-              key={`circle-${i}`}
-              cx={node.x}
-              cy={node.y}
-              r={nodeRadius}
-              fill="white"
-              stroke="black"
-              strokeWidth="3"
-            />
 
-            <text
-              key={`label-${i}`}
-              x={node.x}
-              y={node.y}
-              fontFamily="Arial, sans-serif"
-              fontSize="22"
-              text-anchor="middle"
-              dominant-baseline="central"
-              fill="black"
-            >
-              {node.label}
-            </text>
+              <text
+                key={`label-${i}`}
+                x={x}
+                y={y}
+                fontFamily="Arial, sans-serif"
+                fontSize="22"
+                text-anchor="middle"
+                dominant-baseline="central"
+                fill="black"
+              >
+                {node.label}
+              </text>
 
-            <text
-              key={`branch-${i}`}
-              x={node.x + tagOffsetX}
-              y={node.y - tagOffsetY}
-              fontFamily="Arial, sans-serif"
-              fontSize="14"
-              fill="black"
-            >
-              branch: {node.branch}
-            </text>
-            <text
-              key={`clock-${i}`}
-              x={node.x + tagOffsetX}
-              y={node.y - tagOffsetY - tagSpacingY}
-              fontFamily="Arial, sans-serif"
-              fontSize="14"
-              fill="black"
-            >
-              clock: {node.clock}
-            </text>
-          </>
-        ))}
+              <text
+                key={`branch-${i}`}
+                x={x + tagOffsetX}
+                y={y - tagOffsetY}
+                fontFamily="Arial, sans-serif"
+                fontSize="14"
+                fill="black"
+              >
+                branch: {node.branch}
+              </text>
+              <text
+                key={`clock-${i}`}
+                x={x + tagOffsetX}
+                y={y - tagOffsetY - tagSpacingY}
+                fontFamily="Arial, sans-serif"
+                fontSize="14"
+                fill="black"
+              >
+                clock: {node.clock}
+              </text>
+            </>
+          );
+        })}
 
         {edges.map(({ from, to }) => {
           const fromNode = nodesByLabel[from];
           const toNode = nodesByLabel[to];
 
-          const dx = toNode.x - fromNode.x;
-          const dy = toNode.y - fromNode.y;
+          const x1 = startX + fromNode.x * nodeXGap;
+          const y1 = startY + fromNode.y * nodeYGap;
+
+          const x2 = startX + toNode.x * nodeXGap;
+          const y2 = startY + toNode.y * nodeYGap;
+
+          const dx = x2 - x1;
+          const dy = y2 - y1;
 
           const angle = Math.atan2(dy, dx);
           const lineDx = Math.cos(angle) * linePadding;
@@ -161,10 +175,10 @@ function App() {
           // return a line
           return (
             <line
-              x1={fromNode.x + lineDx}
-              y1={fromNode.y + lineDy}
-              x2={toNode.x - lineDx}
-              y2={toNode.y - lineDy}
+              x1={x1 + lineDx}
+              y1={y1 + lineDy}
+              x2={x2 - lineDx}
+              y2={y2 - lineDy}
               stroke="black"
               strokeWidth="3"
             />
