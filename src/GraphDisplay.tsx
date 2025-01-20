@@ -31,7 +31,6 @@ export const GraphDisplay = ({ step }: { step: Step }) => {
         xmlns="http://www.w3.org/2000/svg"
         width="565px"
         height="310px"
-        style={{ border: "solid black 1px" }}
       >
         <Graph step={step} />
       </svg>
