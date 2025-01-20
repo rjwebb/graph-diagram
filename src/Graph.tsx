@@ -27,7 +27,9 @@ export const Graph = ({ step }: { step: Step }) => {
                 key={`highlight-${i}`}
                 x={x - 35}
                 y={y - 70}
-                fill="lightgreen"
+                stroke="lightgreen"
+                strokeWidth="2px"
+                fill="none"
                 width="80px"
                 height="100px"
                 rx="20px"
