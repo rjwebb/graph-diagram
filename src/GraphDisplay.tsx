@@ -9,6 +9,13 @@ export const GraphDisplay = ({ step }: { step: Step }) => {
     if (!svgRef.current) return;
     const svgContent = svgRef.current.outerHTML;
     await navigator.clipboard.writeText(svgContent);
+
+    const element = document.createElement("a");
+    const file = new Blob([svgContent], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = `${step.name}.svg`;
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
   };
 
   return (

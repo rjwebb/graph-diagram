@@ -1,4 +1,5 @@
 export type Step = {
+  name: string;
   startX: number;
   startY: number;
   nodes: {
@@ -13,6 +14,7 @@ export type Step = {
 };
 
 export const step1: Step = {
+  name: "step_1",
   startX: 150,
   startY: 150,
   nodes: [
@@ -31,6 +33,7 @@ export const step1: Step = {
 };
 
 export const step2: Step = {
+  name: "step_2",
   startX: 150,
   startY: 150,
   nodes: [
@@ -57,6 +60,7 @@ export const step2: Step = {
 };
 
 export const step3: Step = {
+  name: "step_3",
   startX: 110,
   startY: 150,
   nodes: [
@@ -91,6 +95,7 @@ export const step3: Step = {
 };
 
 export const step4: Step = {
+  name: "step_4",
   startX: 110,
   startY: 120,
   nodes: [
@@ -133,6 +138,7 @@ export const step4: Step = {
 };
 
 export const step5: Step = {
+  name: "step_5",
   startX: 110,
   startY: 120,
   nodes: [
@@ -184,6 +190,7 @@ export const step5: Step = {
 };
 
 export const step6: Step = {
+  name: "step_6",
   startX: 30,
   startY: 120,
   nodes: [
@@ -243,6 +250,7 @@ export const step6: Step = {
 };
 
 export const step7: Step = {
+  name: "step_7",
   startX: 30,
   startY: 70,
   nodes: [
