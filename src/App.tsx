@@ -1,31 +1,17 @@
-import { useRef } from "react";
 import "./App.css";
-import { Graph } from "./Graph";
-import { step7 } from "./steps";
+import { GraphDisplay } from "./GraphDisplay";
+
+import { step1, step2, step3, step4, step5, step6, step7 } from "./steps";
+
+const allSteps = [step1, step2, step3, step4, step5, step6, step7];
 
 function App() {
-  const svgRef = useRef(null);
-
-  const copyToClipboard = async () => {
-    if (!svgRef.current) return;
-    const svgContent = (svgRef.current as any).outerHTML;
-    await navigator.clipboard.writeText(svgContent);
-  };
-
   return (
-    <>
-      <svg
-        ref={svgRef}
-        xmlns="http://www.w3.org/2000/svg"
-        width="565px"
-        height="310px"
-        style={{ border: "solid black 1px" }}
-      >
-        <Graph step={step7} />
-      </svg>
-      <br />
-      <button onClick={copyToClipboard}>...</button>
-    </>
+    <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
+      {allSteps.map((step, i) => (
+        <GraphDisplay key={i} step={step} />
+      ))}
+    </div>
   );
 }
 
