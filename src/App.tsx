@@ -138,18 +138,9 @@ function App() {
           const dx = toNode.x - fromNode.x;
           const dy = toNode.y - fromNode.y;
 
-          let lineDx, lineDy;
-          if (dx === 0) {
-            lineDx = 0;
-            lineDy = linePadding;
-          } else if (dy === 0) {
-            lineDy = 0;
-            lineDx = linePadding;
-          } else {
-            const angle = Math.atan2(dy, dx);
-            lineDx = Math.cos(angle) * linePadding;
-            lineDy = Math.sin(angle) * linePadding;
-          }
+          const angle = Math.atan2(dy, dx);
+          const lineDx = Math.cos(angle) * linePadding;
+          const lineDy = Math.sin(angle) * linePadding;
 
           // return a line
           return (
