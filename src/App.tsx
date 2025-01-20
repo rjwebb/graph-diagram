@@ -108,7 +108,7 @@ function App() {
               r={nodeRadius}
               fill="white"
               stroke="black"
-              strokeWidth="4"
+              strokeWidth="3"
             />
 
             <text
@@ -132,7 +132,7 @@ function App() {
               fontSize="14"
               fill="black"
             >
-              branch: {node.clock}
+              branch: {node.branch}
             </text>
             <text
               key={`clock-${i}`}
